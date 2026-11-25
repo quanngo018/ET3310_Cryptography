@@ -1,4 +1,5 @@
 #include "core.h"
+#include "des_table.h"
 
 void swap_32(uint32_t *a, uint32_t *b) {
     uint32_t temp = *a;
