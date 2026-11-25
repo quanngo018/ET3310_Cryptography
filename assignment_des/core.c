@@ -35,7 +35,8 @@ void feistel_function(const uint32_t right, const uint64_t subkey, uint32_t *out
 
     *output = 0;
     for (int i = 0; i < 8; i++) {
-        int row = ((expanded_right >> (42 - 6 * i)) & 0x20) | ((expanded_right >> (42 - 6 * i + 5)) & 0x01);
+        int row = (((expanded_right >> (47 - 6 * i)) & 0x01) << 1)
+        | ((expanded_right >> (42 - 6 * i)) & 0x01);
         int col = (expanded_right >> (42 - 6 * i + 1)) & 0x0F;
         *output |= ((uint32_t)S_BOX[i][row][col]) << (28 - 4 * i);
     }
