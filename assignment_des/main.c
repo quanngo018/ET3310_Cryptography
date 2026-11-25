@@ -20,5 +20,11 @@ int main(void) {
     printf("Expected   : %016llX\n", (unsigned long long)expected_ciphertext);
     printf("%s\n", (ciphertext == expected_ciphertext) ? "PASS" : "FAIL");
 
+    uint64_t decrypted;
+    des_decrypt(ciphertext, subkeys, &decrypted);
+
+    printf("\nDecrypted  : %016llX\n", (unsigned long long)decrypted);
+    printf("%s\n", (decrypted == plaintext) ? "ROUND-TRIP PASS" : "ROUND-TRIP FAIL");
+
     return 0;
 }

@@ -73,4 +73,21 @@ void des_encrypt(const uint64_t plaintext, const uint64_t *subkeys, uint64_t *ci
     inverse_initial_permutation(pre_output, ciphertext);
 }
 
+void des_decrypt(const uint64_t ciphertext, const uint64_t *subkeys, uint64_t *plaintext) {
+    uint64_t permuted_input;
+    initial_permutation(ciphertext, &permuted_input);
+
+    uint32_t left, right;
+    split_left_right(permuted_input, &left, &right);
+
+    for (int i = 15; i >= 0; i--) {
+        feistel_round(&left, &right, subkeys[i]);
+    }
+
+    swap_32(&left, &right);
+
+    uint64_t pre_output = ((uint64_t)left << 32) | right;
+    inverse_initial_permutation(pre_output, plaintext);
+}
+
 
